@@ -163,7 +163,7 @@ end);
 wait(1);
 TPController:Teleport({pos=GlobalBoss.spawnPos,areaName=nil,regionName="Global Boss",leaveGamemode=true});
 wait(1);
-local repo = "https://gitee.com/Eternalnightfall/script/raw/master/LinoriaLibUI/";
+local repo = "https://raw.githubusercontent.com/wrk226/SFS/main/LinoriaLibUI/";
 local Library = loadstring(game:HttpGet(repo .. "Library.lua"))();
 local SaveManager = loadstring(game:HttpGet(repo .. "addons/SaveManager.lua"))();
 SaveManager:SetFolder("SFSConfiguration");
@@ -171,7 +171,8 @@ SaveManager:SetLibrary(Library);
 local Window = Library:CreateWindow({Title="SFS Sript",Center=true,AutoShow=true});
 --added code
 local my_UDatas = {}
-local my_Labels = {}
+--local my_Labels = {}
+local Labels = {}
 --------------------
 --Library:CreateUserData("UDatas");
 local Tabs = {MainTab=Window:AddTab("Main-Dungeon"),RelicTab=Window:AddTab("Relic-Event"),Farm=Window:AddTab("Farm-Egg-Misc"),MiscTab=Window:AddTab("Filter"),EnchantTab=Window:AddTab("Enchant")};
@@ -233,11 +234,11 @@ Dungeon:AddButton("Reset Dungeon Status", function()
 end);
 Tower:AddToggle("AutoTower", {Text="Auto Tower",Default=false,Tooltip="Auto Tower"});
 Raid:AddToggle("AutoRaid", {Text="Auto Raid",Default=false,Tooltip="Auto Raid"});
-UpgradeList:AddLabel("UpgradeId", "", true);
-UpgradeList:AddLabel("UpgradeName", "", true);
-UpgradeList:AddLabel("UpgradeExp", "", true);
+Labels.UpgradeId = UpgradeList:AddLabel("UpgradeId", "", true);
+Labels.UpgradeName = UpgradeList:AddLabel("UpgradeName", "", true);
+Labels.UpgradeExp = UpgradeList:AddLabel("UpgradeExp", "", true);
 Upgrade:AddToggle("AutoUpgradeRelic", {Text="Auto Upgrade Relic",Default=false,Tooltip="Auto Upgrade Relic"});
-Upgrade:AddLabel("BlackList", "20/25");
+Labels.BlackList = Upgrade:AddLabel("BlackList", "20/25");
 Upgrade:AddButton("All BlackList", function()
 	for i, v in pairs(PlayerData.RelicAutoDelete) do
 		if not v then
@@ -257,8 +258,8 @@ Upgrade:AddButton("Add BlackList", function()
 	end
 	my_UDatas["ExpRelicList"] = ExpRelicList
 	--UserDatas.UDatas:SetValue("ExpRelicList", ExpRelicList);
-	my_Labels['BlackList'] = "All:" .. #ExpRelicList
-	--Labels.BlackList:SetText("All:" .. #ExpRelicList);
+	--my_Labels['BlackList'] = "All:" .. #ExpRelicList
+	Labels.BlackList:SetText("All:" .. #ExpRelicList);
 end):AddButton("Add Up Relic", function()
 	local selec = nil;
 	for i, v in pairs(LocalPlayer.PlayerGui.Inventory.Background.ImageFrame.Window.Frames.ItemsFrame.ItemsHolder.ItemsScrolling:GetChildren()) do
@@ -268,36 +269,36 @@ end):AddButton("Add Up Relic", function()
 	end
 	if selec then
 		SelectedRelic = selec;
-		my_Labels["UpgradeId"] = selec
-		--Labels.UpgradeId:SetText(selec);
+		--my_Labels["UpgradeId"] = selec
+		Labels.UpgradeId:SetText(selec);
 		my_UDatas["UpgradeId"] = PlayerData.RelicInv[selec].name
 		--UserDatas.UDatas:SetValue("UpgradeId", selec);
-		my_Labels["UpgradeName"] = PlayerData.RelicInv[selec].name
-		--Labels.UpgradeName:SetText(PlayerData.RelicInv[selec].name);
+		--my_Labels["UpgradeName"] = PlayerData.RelicInv[selec].name
+		Labels.UpgradeName:SetText(PlayerData.RelicInv[selec].name);
 		my_UDatas["UpgradeName"] = PlayerData.RelicInv[selec].name
 		--UserDatas.UDatas:SetValue("UpgradeName", PlayerData.RelicInv[selec].name);
-		my_Labels["UpgradeExp"] = PlayerData.RelicInv[selec].exp
-		--Labels.UpgradeExp:SetText(PlayerData.RelicInv[selec].exp);
+		--my_Labels["UpgradeExp"] = PlayerData.RelicInv[selec].exp
+		Labels.UpgradeExp:SetText(PlayerData.RelicInv[selec].exp);
 		my_UDatas["UpgradeExp"] = PlayerData.RelicInv[selec].exp
 		--UserDatas.UDatas:SetValue("UpgradeExp", PlayerData.RelicInv[selec].exp);
 	else
-		my_Labels["UpgradeId"] = "NULL"
-		--Labels.UpgradeId:SetText("NULL");
+		--my_Labels["UpgradeId"] = "NULL"
+		Labels.UpgradeId:SetText("NULL");
 	end
 end);
 Upgrade:AddDropdown("Relic_DefaultWeaponGroup", {Values={},Default=0,Multi=false,Text="Default Weapon Group",Tooltip="Selected Default Weapon Group"});
 AutoFarmBox:AddToggle("autoFarm", {Text="Auto Farm",Default=false,Tooltip="Auto Farm"});
 AutoFarmBox:AddToggle("FarmAllMap", {Text="Farm All Map",Default=false,Tooltip="Farm All Map"});
 AutoFarmBox:AddToggle("FarmSelectedMobs", {Text="Farm Selected Mobs",Default=false,Tooltip="Farm Selected Mobs"});
-AutoFarmBox:AddLabel("MonstersLabel", "list");
+Labels.MonstersLabel = AutoFarmBox:AddLabel("MonstersLabel", "list");
 AutoFarmBox:AddDropdown("SelectedArea", {Values=AreaMaps,Default=0,Multi=false,Text="Selected Area",Tooltip="Selected Area"});
 AutoFarmBox:AddDropdown("SelectedMob", {Values={},Default=0,Multi=true,Text="Black List Mob",Tooltip="Black List Mob"});
-BlackList:AddLabel("BlackListLabel", "", true);
-WhiteListList:AddLabel("WhiteListLabel", "", true);
+Labels.BlackListLabel = BlackList:AddLabel("BlackListLabel", "", true);
+Labels.WhiteListLabel =  WhiteListList:AddLabel("WhiteListLabel", "", true);
 AutoFarmBox:AddDropdown("OtherMob", {Values={},Default=0,Multi=true,Text="White List Mob",Tooltip="White List Mob"});
 AutoFarmBox:AddButton("Add BlackList", function()
-	my_Labels["BlackListLabel"] = ""
-	--Labels.BlackListLabel:SetText("");
+	--my_Labels["BlackListLabel"] = ""
+	Labels.BlackListLabel:SetText("");
 	local MobBlackListStr = "";
 	for key, value in next, Options.SelectedMob.Value do
 		if not table.find(MobBlackList, key) then
@@ -310,13 +311,13 @@ AutoFarmBox:AddButton("Add BlackList", function()
 	if (#MobBlackList == 0) then
 		MobBlackListStr = MobBlackListStr .. "is NULL";
 	end
-	my_Labels["BlackListLabel"] = MobBlackListStr
-	--Labels.BlackListLabel:SetText(MobBlackListStr);
+	--my_Labels["BlackListLabel"] = MobBlackListStr
+	Labels.BlackListLabel:SetText(MobBlackListStr);
 	my_UDatas["MobBlackList"] =  MobBlackList
 	--UserDatas.UDatas:SetValue("MobBlackList", MobBlackList);
 end):AddButton("Add WhiteList", function()
-	my_Labels["WhiteListLabel"] = ""
-	--Labels.WhiteListLabel:SetText("");
+	--my_Labels["WhiteListLabel"] = ""
+	Labels.WhiteListLabel:SetText("");
 	local MobWhiteListStr = "";
 	for key, value in next, Options.OtherMob.Value do
 		if not table.find(MobWhiteList, key) then
@@ -329,20 +330,20 @@ end):AddButton("Add WhiteList", function()
 	if (#MobWhiteList == 0) then
 		MobWhiteListStr = MobWhiteListStr .. "is NULL";
 	end
-	my_Labels["WhiteListLabel"] = MobWhiteListStr
-	--Labels.WhiteListLabel:SetText(MobWhiteListStr);
+	--my_Labels["WhiteListLabel"] = MobWhiteListStr
+	Labels.WhiteListLabel:SetText(MobWhiteListStr);
 	my_UDatas["MobWhiteList"]=MobWhiteList
 	--UserDatas.UDatas:SetValue("MobWhiteList", MobWhiteList);
 end);
 AutoFarmBox:AddButton("Clean BlackList", function()
-	my_Labels["BlackListLabel"] = ""
-	--Labels.BlackListLabel:SetText("");
+	--my_Labels["BlackListLabel"] = ""
+	Labels.BlackListLabel:SetText("");
 	MobBlackList = {};
 	my_UDatas["MobBlackList"]=MobBlackList
 	--UserDatas.UDatas:SetValue("MobBlackList", MobBlackList);
 end):AddButton("Clean WhiteList", function()
-	my_Labels["WhiteListLabel"] = ""
-	--Labels.WhiteListLabel:SetText("");
+	--my_Labels["WhiteListLabel"] = ""
+	Labels.WhiteListLabel:SetText("");
 	MobWhiteList = {};
 	my_UDatas["MobWhiteList"]=MobWhiteList
 	--UserDatas.UDatas:SetValue("MobWhiteList", MobWhiteList);
@@ -399,14 +400,14 @@ Filter:AddToggle("UseFilterForAutoShell", {Text="Use Filter For Auto Shell?",Def
 Filter:AddToggle("UseFilterForAutoRoll", {Text="Use Filter For Auto Roll?",Default=false,Tooltip="Use Filter For Auto Roll?"});
 Filter:AddDropdown("Enchant", {Values={},Default=0,Multi=false,Text="Enchant",Tooltip="Enchant"});
 Filter:AddDropdown("Tiers", {Values={0,1,2,3,4,5},Default=0,Multi=false,Text="Tiers",Tooltip="Tiers"});
-FilterList:AddLabel("FList", "", true);
+Labels.FList = FilterList:AddLabel("FList", "", true);
 PetFilter:AddToggle("UsePetFilterForAutoShell", {Text="Use Filter For Auto Shell?",Default=false,Tooltip="Use Filter For Auto Shell?"});
 PetFilter:AddDropdown("PetEnchant", {Values={},Default=0,Multi=false,Text="Enchant",Tooltip="Enchant"});
 PetFilter:AddDropdown("PetTiers", {Values={0,1,2,3,4,5},Default=0,Multi=false,Text="Tiers",Tooltip="Tiers"});
-PetFilterList:AddLabel("PetFList", "", true);
+Labels.PetFList = PetFilterList:AddLabel("PetFList", "", true);
 Enchant:AddToggle("AutoRoll", {Text="Auto Roll",Default=false,Tooltip="Auto Roll"});
 Enchant:AddToggle("CloseRollAnimation", {Text="Close Roll Animation",Default=false,Tooltip="Close Roll Animation"});
-RollList:AddLabel("RList", "", true);
+Labels.RList = RollList:AddLabel("RList", "", true);
 Enchant:AddButton("Add", function()
 end);
 Enchant:AddButton("Lock", function()
@@ -1434,8 +1435,8 @@ task.spawn(function()
 					if expRelicFound then
 						KnitService.RelicLevelingService.RF.LevelUp:InvokeServer(SelectedRelic, RelicExp);
 						UIController:CloseScreen("RelicLeveling");
-						my_Labels["UpgradeExp"] = PlayerData.RelicInv[SelectedRelic].exp
-						--Labels.UpgradeExp:SetText(PlayerData.RelicInv[SelectedRelic].exp);
+						--my_Labels["UpgradeExp"] = PlayerData.RelicInv[SelectedRelic].exp
+						Labels.UpgradeExp:SetText(PlayerData.RelicInv[SelectedRelic].exp);
 						my_UDatas["UpgradeExp"]=PlayerData.RelicInv[SelectedRelic].exp
 						--UserDatas.UDatas:SetValue("UpgradeExp", PlayerData.RelicInv[SelectedRelic].exp);
 					end
@@ -1840,14 +1841,14 @@ Options.Tiers:OnChanged(function()
 		EnchantsRefuse[SelectedEnchant] = 0;
 	end
 	EnchantsRefuse[SelectedEnchant] = Options.Tiers.Value;
-	my_Labels["FList"] = ""
-	--Labels.FList:SetText("");
+	--my_Labels["FList"] = ""
+	Labels.FList:SetText("");
 	local TiersStr = "";
 	for key, value in EnchantsRefuse do
 		TiersStr = TiersStr .. key .. ":" .. value .. "\n";
 	end
-	my_Labels["FList"] = TiersStr
-	--Labels.FList:SetText(TiersStr);
+	--my_Labels["FList"] = TiersStr
+	Labels.FList:SetText(TiersStr);
 end);
 Toggles.UsePetFilterForAutoShell:OnChanged(function()
 	UsePetFilter = Toggles.UsePetFilterForAutoShell.Value;
@@ -1864,14 +1865,14 @@ Options.PetTiers:OnChanged(function()
 		PetEnchantsRefuse[SelectedPetEnchant] = 0;
 	end
 	PetEnchantsRefuse[SelectedPetEnchant] = Options.PetTiers.Value;
-	my_Labels["PetFList"] = ""
-	--Labels.PetFList:SetText("");
+	--my_Labels["PetFList"] = ""
+	Labels.PetFList:SetText("");
 	local TiersStr = "";
 	for key, value in PetEnchantsRefuse do
 		TiersStr = TiersStr .. key .. ":" .. value .. "\n";
 	end
-	my_Labels["PetFList"] = TiersStr
-	--Labels.PetFList:SetText(TiersStr);
+	--my_Labels["PetFList"] = TiersStr
+	Labels.PetFList:SetText(TiersStr);
 end);
 local MyButton = Instance.new("ImageButton");
 MyGui.Parent = game.CoreGui;
@@ -1926,13 +1927,13 @@ local loadData = function()
 	local uData = my_UDatas
 	--local uData = UserDatas.UDatas.Value;
 	if uData["UpgradeId"] then
-		my_Labels["UpgradeId"] = uData["UpgradeId"]
-		--Labels.UpgradeId:SetText(uData["UpgradeId"]);
+		--my_Labels["UpgradeId"] = uData["UpgradeId"]
+		Labels.UpgradeId:SetText(uData["UpgradeId"]);
 		SelectedRelic = uData["UpgradeId"];
-		my_Labels["UpgradeName"] = uData["UpgradeName"]
-		--Labels.UpgradeName:SetText(uData["UpgradeName"]);
-		my_Labels["UpgradeExp"] = uData["UpgradeExp"]
-		--Labels.UpgradeExp:SetText(uData["UpgradeExp"]);
+		--my_Labels["UpgradeName"] = uData["UpgradeName"]
+		Labels.UpgradeName:SetText(uData["UpgradeName"]);
+		--my_Labels["UpgradeExp"] = uData["UpgradeExp"]
+		Labels.UpgradeExp:SetText(uData["UpgradeExp"]);
 	end
 	local MobBlackListStr = "";
 	MobBlackList = uData["MobBlackList"];
@@ -1947,8 +1948,8 @@ local loadData = function()
 		if (#MobBlackList == 0) then
 			MobBlackListStr = MobBlackListStr .. "is NULL";
 		end
-		my_Labels["BlackListLabel"] = MobBlackListStr
-		--Labels.BlackListLabel:SetText(MobBlackListStr);
+		--my_Labels["BlackListLabel"] = MobBlackListStr
+		Labels.BlackListLabel:SetText(MobBlackListStr);
 	else
 		MobBlackList = {};
 	end
@@ -1960,8 +1961,8 @@ local loadData = function()
 		if (#MobWhiteList == 0) then
 			MobBlackListStr = MobBlackListStr .. "is NULL";
 		end
-		my_Labels["WhiteListLabel"] = MobBlackListStr
-		--Labels.WhiteListLabel:SetText(MobBlackListStr);
+		--my_Labels["WhiteListLabel"] = MobBlackListStr
+		Labels.WhiteListLabel:SetText(MobBlackListStr);
 	else
 		MobWhiteList = {};
 	end
@@ -1970,20 +1971,20 @@ local loadData = function()
 		for key, value in EnchantsRefuse do
 			TiersStr = TiersStr .. key .. ":" .. value .. "\n";
 		end
-		my_Labels["FList"] = TiersStr
-		--Labels.FList:SetText(TiersStr);
+		--my_Labels["FList"] = TiersStr
+		Labels.FList:SetText(TiersStr);
 	end
 	if (PetEnchantsRefuse ~= nil) then
 		local TiersStr = "";
 		for key, value in PetEnchantsRefuse do
 			TiersStr = TiersStr .. key .. ":" .. value .. "\n";
 		end
-		my_Labels["PetFList"] = TiersStr
-		--Labels.PetFList:SetText(TiersStr);
+		--my_Labels["PetFList"] = TiersStr
+		Labels.PetFList:SetText(TiersStr);
 	end
 	if ExpRelicList then
-		my_Labels["BlackList"] = "All:" .. #ExpRelicList
-		--Labels.BlackList:SetText("All:" .. #ExpRelicList);
+		--my_Labels["BlackList"] = "All:" .. #ExpRelicList
+		Labels.BlackList:SetText("All:" .. #ExpRelicList);
 	end
 end;
 if SaveManager:Load(ConfigurationName) then
