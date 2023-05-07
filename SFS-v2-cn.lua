@@ -79,7 +79,7 @@ local AreaMaps = {"Server Boss",
 				  "Area 1","Area 2","Area 3","Area 4","Area 5",
 				  "Area 6","Area 7","Area 8","Area 9","Area 10",
 				  "Area 11","Area 12","Area 13","Area 14","Area 15",
-				  "Area 16","Area 17","Area 18","Area 19"};
+				  "Area 16","Area 17","Area 18","Area 19","Area 20"};
 local Buy_Egg_Args = {eggName="Egg 25",auto=false,amount=4};
 local AllMobs = {
     ["Server Boss"]={"Mummified Emperor","Chained Warrior","Water Drop OverLord","Kal'zim the Exiled Demon","Cherry Blossom Warrior","Firework Guardian","Unknown Viking Warrior"},
@@ -101,7 +101,9 @@ local AllMobs = {
     ["Area 16"]={"Magma Monster","Underwold Dealer","Undead Knight","Lucifer","Corrupted Demon","Scarlet Fiend","Hell's Warrior","Muay Thai Demon"},
     ["Area 17"]={"Hapkido Grandmaster","Black Tiger","Crimson Phoenix","Dragon Whisperer","Korean Wind","Korean Sunrise","Seoul Shogun"},
 	["Area 18"]={"Blindfolded Fighter","Nunchaku Master","Marked Guardian","The Silent Oni","Novice","Lin Mei","Tribal Guardian"},
-	["Area 19"]={"Jarl","Berserker","Spear Master","Wolf Hunter","Viking","Lagertha","Bear Leader"}
+	["Area 19"]={"Jarl","Berserker","Spear Master","Wolf Hunter","Viking","Lagertha","Bear Leader"},
+	["Area 20"]={"Lost Explorer","Sun Praiser","Jungle Cultist","Skilled Commando","Jungle Explorer","Jungle Witch","Tiki Leader"}
+
 };
 local BloodMoonMobs = {"Blood Zombie","Blood Vampire",
                        "Mutant Insect",
@@ -113,10 +115,11 @@ local BloodMoonMobs = {"Blood Zombie","Blood Vampire",
 					   "Hell's Warrior","Muay Thai Demon",
 					   "Korean Sunrise","Seoul Shogun",
 					   "Lin Mei","Tribal Guardian",
-					   "Lagertha","Bear Leader"};
+					   "Lagertha","Bear Leader",
+					   "Jungle Witch","Tiki Leader"};
 local ServerBossList = {"Mummified Emperor","Chained Warrior","Water Drop Overlord",
                         "Kal'zim the Exiled Demon","Cherry Blossom Warrior","Firework Guardian",
-					    "Unknown Viking Warrior"};
+					    "Unknown Viking Warrior","Army General"};
 local RunService = game:GetService("RunService");
 local HttpService = game:GetService("HttpService");
 local KnitService = game:GetService("ReplicatedStorage").Packages.Knit.Services;
