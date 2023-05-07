@@ -2996,7 +2996,7 @@ function Library:CreateWindow(...)
         Parent = Inner;
     });
 
-    local MainSectionOuter = Library:Create('ScrollingFrame', {
+    local MainSectionOuter = Library:Create('Frame', {
         BackgroundColor3 = Library.BackgroundColor;
         BorderColor3 = Library.OutlineColor;
         Position = UDim2.new(0, 8, 0, 25);
