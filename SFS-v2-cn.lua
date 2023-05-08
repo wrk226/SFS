@@ -143,29 +143,29 @@ local NPCService = Knit_Pkg.GetService("NPCService");
 local LimitedController = Knit_Pkg.GetController("LimitedShopsController");
 local Util = require(Knit_Pkg.Util.Utility);
 local MyGui = Instance.new("ScreenGui");
-task.spawn(function()
-	local Foot = game:GetService("Players").LocalPlayer.Character:FindFirstChild("RightFoot");
-	local Hrp = game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart");
-	local oldPos = Hrp.CFrame;
-	local dConnection = false;
-	task.spawn(function()
-		task.wait(1);
-		getgenv().Connection = Foot.Touched:Connect(function()
-			dConnection = true;
-		end);
-	end);
-	repeat
-		task.wait();
-		Hrp.CFrame = CFrame.new(Workspace:GetAttribute("DungeonSpawn"));
-		wait(2);
-	until dConnection == true 
-	getgenv().Connection:Disconnect();
-	wait(0.5);
-	Hrp.CFrame = oldPos;
-end);
-wait(1);
-TPController:Teleport({pos=GlobalBoss.spawnPos,areaName=nil,regionName="Global Boss",leaveGamemode=true});
-wait(1);
+-- task.spawn(function()
+-- 	local Foot = game:GetService("Players").LocalPlayer.Character:FindFirstChild("RightFoot");
+-- 	local Hrp = game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart");
+-- 	local oldPos = Hrp.CFrame;
+-- 	local dConnection = false;
+-- 	task.spawn(function()
+-- 		task.wait(1);
+-- 		getgenv().Connection = Foot.Touched:Connect(function()
+-- 			dConnection = true;
+-- 		end);
+-- 	end);
+-- 	repeat
+-- 		task.wait();
+-- 		Hrp.CFrame = CFrame.new(Workspace:GetAttribute("DungeonSpawn"));
+-- 		wait(2);
+-- 	until dConnection == true 
+-- 	getgenv().Connection:Disconnect();
+-- 	wait(0.5);
+-- 	Hrp.CFrame = oldPos;
+-- end);
+-- wait(1);
+-- TPController:Teleport({pos=GlobalBoss.spawnPos,areaName=nil,regionName="Global Boss",leaveGamemode=true});
+-- wait(1);
 local repo = "https://raw.githubusercontent.com/wrk226/SFS/main/LinoriaLibUI/";
 local Library = loadstring(game:HttpGet(repo .. "Library.lua"))();
 local SaveManager = loadstring(game:HttpGet(repo .. "addons/SaveManager.lua"))();
