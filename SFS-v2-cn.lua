@@ -729,23 +729,54 @@ coroutine.wrap(function()
 		closest = Closest_NPC();
 	end
 end)();
+-- coroutine.wrap(function()
+-- 	local lastCastTime = 0
+-- 	local minCastInterval = 1.5
+-- 	while wait(0.2) do
+-- 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+-- 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+-- 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
+-- 			for v48, v49 in u2, nil do	
+-- 				while (os.clock() - lastCastTime) < minCastInterval do
+-- 					wait(0.2)  -- 等待一小段时间，然后再检查
+-- 				end
+-- 				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
+-- 				lastCastTime = os.clock()
+-- 			end
+-- 		end
+-- 	end
+-- end)();
+local SkillEvent = Instance.new("BindableEvent")
+-- 设定最小释放技能间隔为0.5秒
+local minCastInterval = 0.5
+local lastCastTime = os.clock()
+
+-- 创建一个专门的函数用于释放技能
+local function castSkill(npc, skill)
+	local currentTime = os.clock()
+	if currentTime - lastCastTime < minCastInterval then
+		wait(minCastInterval - (currentTime - lastCastTime))
+	end
+	SkillService:CastSpell(npc, skill)
+	lastCastTime = os.clock()
+end
+
+-- 将该函数连接到事件
+SkillEvent.Event:Connect(castSkill)
+
 coroutine.wrap(function()
-	local lastCastTime = 0
-	local minCastInterval = 1.5
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
-			for v48, v49 in u2, nil do	
-				while (os.clock() - lastCastTime) < minCastInterval do
-					wait(0.2)  -- 等待一小段时间，然后再检查
-				end
-				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
-				lastCastTime = os.clock()
+			for _, v49 in pairs(u2) do
+				-- 触发事件，而不是直接释放技能
+				SkillEvent:Fire(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"))
 			end
 		end
 	end
 end)();
+
 game:GetService("ReplicatedStorage").ActiveRaids.ChildAdded:Connect(function()
 	if AutoRaid then
 		wait(3);
