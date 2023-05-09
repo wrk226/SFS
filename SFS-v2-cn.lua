@@ -730,13 +730,18 @@ coroutine.wrap(function()
 	end
 end)();
 coroutine.wrap(function()
+	local lastCastTime = 0
+	local minCastInterval = 1.5
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
-			for v48, v49 in u2, nil do				
+			for v48, v49 in u2, nil do	
+				while (os.clock() - lastCastTime) < minCastInterval do
+					wait(0.2)  -- 等待一小段时间，然后再检查
+				end
 				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
-				wait(2)
+				lastCastTime = os.clock()
 			end
 		end
 	end
