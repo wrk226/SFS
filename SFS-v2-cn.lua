@@ -730,7 +730,7 @@ coroutine.wrap(function()
 	end
 end)();
 coroutine.wrap(function()
-	while wait(0.2) do
+	while wait(1.1) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
