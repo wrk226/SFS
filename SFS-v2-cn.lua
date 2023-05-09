@@ -730,12 +730,13 @@ coroutine.wrap(function()
 	end
 end)();
 coroutine.wrap(function()
-	while wait(3.1) do
+	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
-			for v48, v49 in u2, nil do
+			for v48, v49 in u2, nil do				
 				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
+				wait(2)
 			end
 		end
 	end
