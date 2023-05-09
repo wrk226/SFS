@@ -746,23 +746,18 @@ end)();
 -- 		end
 -- 	end
 -- end)();
-local SkillEvent = Instance.new("BindableEvent")
--- 设定最小释放技能间隔为0.5秒
 local minCastInterval = 0.5
-local lastCastTime = os.clock()
+local lastCastTime = {}
 
 -- 创建一个专门的函数用于释放技能
 local function castSkill(npc, skill)
 	local currentTime = os.clock()
-	if currentTime - lastCastTime < minCastInterval then
-		wait(minCastInterval - (currentTime - lastCastTime))
+	if lastCastTime[skill] and currentTime - lastCastTime[skill] < minCastInterval then
+		wait(minCastInterval - (currentTime - lastCastTime[skill]))
 	end
 	SkillService:CastSpell(npc, skill)
-	lastCastTime = os.clock()
+	lastCastTime[skill] = os.clock()
 end
-
--- 将该函数连接到事件
-SkillEvent.Event:Connect(castSkill)
 
 coroutine.wrap(function()
 	while wait(0.2) do
@@ -770,12 +765,14 @@ coroutine.wrap(function()
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
 			for _, v49 in pairs(u2) do
-				-- 触发事件，而不是直接释放技能
-				SkillEvent:Fire(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"))
+				-- 为每个技能创建一个新的协程
+				coroutine.wrap(function()
+					castSkill(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"))
+				end)()
 			end
 		end
 	end
-end)();
+end)()
 
 game:GetService("ReplicatedStorage").ActiveRaids.ChildAdded:Connect(function()
 	if AutoRaid then
