@@ -774,12 +774,12 @@ coroutine.wrap(function()
 -- 			if (os.clock() - skill2lastCastTime) <= minCastInterval then
 -- 				wait(minCastInterval-(os.clock() - skill2lastCastTime))
 -- 			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local secondSkill = Skills:WaitForChild("Template2");
 			--如果上次第1技能和第2技能释放时间间隔过短，则延缓第2技能释放
 			if math.abs(skill2lastCastTime - skill1lastCastTime) < minInterCastInterval then
 				wait(minInterCastInterval - math.abs(skill2lastCastTime - skill1lastCastTime))
 			end
-			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
-			local secondSkill = Skills:WaitForChild("Template2");
 			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), secondSkill:GetAttribute("Skill"));
 			skill2lastCastTime = os.clock()
 		end
@@ -794,12 +794,12 @@ coroutine.wrap(function()
 -- 			if (os.clock() - skill3lastCastTime) <= minCastInterval then
 -- 				wait(minCastInterval-(os.clock() - skill3lastCastTime))
 -- 			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local thirdSkill = Skills:WaitForChild("Template3");
 			--如果上次第2技能和第3技能释放时间间隔过短，则延缓第3技能释放
 			if math.abs(skill3lastCastTime - skill2lastCastTime) < minInterCastInterval then
 				wait(minInterCastInterval - math.abs(skill3lastCastTime - skill2lastCastTime))
 			end
-			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
-			local thirdSkill = Skills:WaitForChild("Template3");
 			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), thirdSkill:GetAttribute("Skill"));
 			skill3lastCastTime = os.clock()
 		end
