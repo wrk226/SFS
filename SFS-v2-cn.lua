@@ -753,7 +753,7 @@ coroutine.wrap(function()
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			while (os.clock() - lastCastTime) <= minCastInterval do
-				wait(minCastInterval-(os.clock() - lastCastTime))
+				wait(minCastInterval-(os.clock() - lastCastTime)+math.random()*0.1)
 			end
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local firstSkill = Skills:WaitForChild("Template1");
@@ -767,7 +767,7 @@ coroutine.wrap(function()
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			while (os.clock() - lastCastTime) <= minCastInterval do
-				wait(minCastInterval-(os.clock() - lastCastTime))
+				wait(minCastInterval-(os.clock() - lastCastTime)+math.random()*0.1)
 			end
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local secondSkill = Skills:WaitForChild("Template2");
@@ -781,7 +781,7 @@ coroutine.wrap(function()
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
 			while (os.clock() - lastCastTime) <= minCastInterval do
-				wait(minCastInterval-(os.clock() - lastCastTime))
+				wait(minCastInterval-(os.clock() - lastCastTime)+math.random()*0.1)
 			end
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local thirdSkill = Skills:WaitForChild("Template3");
