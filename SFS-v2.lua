@@ -725,20 +725,62 @@ coroutine.wrap(function()
 		closest = Closest_NPC();
 	end
 end)();
+--skill 1
+local skill1lastCastTime = 0
+local minInterCastInterval = 1 --不同技能释放时间间隔
+-- local minCastInterval = 3 --小于最短技能冷却时间就行
 coroutine.wrap(function()
-	local lastCastTime = 0
-	local minCastInterval = 1.5
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+-- 			--技能释放后本进程暂停刷新minCastInterval秒
+-- 			if (os.clock() - skill1lastCastTime) <= minCastInterval then
+-- 				wait(minCastInterval-(os.clock() - skill1lastCastTime))
+-- 			end
+
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
-			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
-			for v48, v49 in u2, nil do	
-				while (os.clock() - lastCastTime) < minCastInterval do
-					wait(0.2)  -- 等待一小段时间，然后再检查
-				end
-				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
-				lastCastTime = os.clock()
+			local firstSkill = Skills:WaitForChild("Template");
+			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), firstSkill:GetAttribute("Skill"));
+			skill1lastCastTime = os.clock()
+		end
+	end
+end)();
+--skill 2
+local skill2lastCastTime = 0
+coroutine.wrap(function()
+	while wait(0.2) do
+		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+-- 			--技能释放后本进程暂停刷新minCastInterval秒
+-- 			if (os.clock() - skill2lastCastTime) <= minCastInterval then
+-- 				wait(minCastInterval-(os.clock() - skill2lastCastTime))
+-- 			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local secondSkill = Skills:WaitForChild("Template2");
+			--如果上次第1技能和第2技能释放时间间隔过短，则延缓第2技能释放
+			if math.abs(skill2lastCastTime - skill1lastCastTime) < minInterCastInterval then
+				wait(minInterCastInterval - math.abs(skill2lastCastTime - skill1lastCastTime))
 			end
+			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), secondSkill:GetAttribute("Skill"));
+			skill2lastCastTime = os.clock()
+		end
+	end
+end)();
+--skill 3
+local skill3lastCastTime = 0
+coroutine.wrap(function()
+	while wait(0.2) do
+		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+-- 			--技能释放后本进程暂停刷新minCastInterval秒
+-- 			if (os.clock() - skill3lastCastTime) <= minCastInterval then
+-- 				wait(minCastInterval-(os.clock() - skill3lastCastTime))
+-- 			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local thirdSkill = Skills:WaitForChild("Template3");
+			--如果上次第2技能和第3技能释放时间间隔过短，则延缓第3技能释放
+			if math.abs(skill3lastCastTime - skill2lastCastTime) < minInterCastInterval then
+				wait(minInterCastInterval - math.abs(skill3lastCastTime - skill2lastCastTime))
+			end
+			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), thirdSkill:GetAttribute("Skill"));
+			skill3lastCastTime = os.clock()
 		end
 	end
 end)();
