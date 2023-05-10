@@ -850,8 +850,21 @@ coroutine.wrap(function()
 		if (CorruptEventCheck and Workspace:GetAttribute("CORRUPT_EVENT") and isCorruptEvent) then
 			isCorruptEvent = false;
 			local autoFarmStart = Toggles.autoFarm.Value;
+			local v14 = string.split(v13, ", ");
+			print("teleport to first corrupt area")
 			Toggles.autoFarm:SetValue(false);
-			TPController:TeleportArea(Workspace:GetAttribute("CORRUPT_EVENT"));
+			TPController:TeleportArea(v14[1])
+			wait(0.5);
+			Toggles.autoFarm:SetValue(true);
+			task.spawn(function()
+				wait(10);
+				Toggles.autoFarm:SetValue(autoFarmStart);
+				LocalPlayer.Character:WaitForChild("HumanoidRootPart", 1).CFrame = Workspace.Live.FloatingEggs[selectedEgg].HumanoidRootPart.CFrame * CFrame.new(0, 4, -3.5);
+			end);
+
+			print("teleport to second corrupt area")
+			Toggles.autoFarm:SetValue(false);
+			TPController:TeleportArea(v14[2])
 			wait(0.5);
 			Toggles.autoFarm:SetValue(true);
 			task.spawn(function()
