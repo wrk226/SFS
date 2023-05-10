@@ -729,20 +729,64 @@ coroutine.wrap(function()
 		closest = Closest_NPC();
 	end
 end)();
+-- coroutine.wrap(function()
+-- 	local lastCastTime = 0
+-- 	local minCastInterval = 1
+-- 	while wait(0.2) do
+-- 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+-- 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+-- 			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
+-- 			for v48, v49 in u2, nil do	
+-- 				if (os.clock() - lastCastTime) < minCastInterval then
+-- 					wait(minCastInterval-(os.clock() - lastCastTime))  
+-- 				end
+-- 				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
+-- 				lastCastTime = os.clock()
+-- 			end
+-- 		end
+-- 	end
+-- end)();
+--skill 1
+local lastCastTime = 0
+local minCastInterval = 1
 coroutine.wrap(function()
-	local lastCastTime = 0
-	local minCastInterval = 1
 	while wait(0.2) do
 		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
-			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
-			local u2 = {Skills:WaitForChild("Template"),Skills:WaitForChild("Template2"),Skills:WaitForChild("Template3")};
-			for v48, v49 in u2, nil do	
-				if (os.clock() - lastCastTime) < minCastInterval then
-					wait(minCastInterval-(os.clock() - lastCastTime))  
-				end
-				SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), v49:GetAttribute("Skill"));
-				lastCastTime = os.clock()
+			while (os.clock() - lastCastTime) <= minCastInterval do
+				wait(minCastInterval-(os.clock() - lastCastTime))
 			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local firstSkill = Skills:WaitForChild("Template1");
+			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), firstSkill:GetAttribute("Skill"));
+			lastCastTime = os.clock()
+		end
+	end
+end)();
+--skill 2
+coroutine.wrap(function()
+	while wait(0.2) do
+		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+			while (os.clock() - lastCastTime) <= minCastInterval do
+				wait(minCastInterval-(os.clock() - lastCastTime))
+			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local secondSkill = Skills:WaitForChild("Template2");
+			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), secondSkill:GetAttribute("Skill"));
+			lastCastTime = os.clock()
+		end
+	end
+end)();
+--skill 3
+coroutine.wrap(function()
+	while wait(0.2) do
+		if (LocalPlayer:GetAttribute("NPC") ~= nil) then
+			while (os.clock() - lastCastTime) <= minCastInterval do
+				wait(minCastInterval-(os.clock() - lastCastTime))
+			end
+			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
+			local thirdSkill = Skills:WaitForChild("Template3");
+			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), thirdSkill:GetAttribute("Skill"));
+			lastCastTime = os.clock()
 		end
 	end
 end)();
