@@ -761,7 +761,7 @@ coroutine.wrap(function()
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local firstSkill = Skills:WaitForChild("Template1");
 			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), firstSkill:GetAttribute("Skill"));
-		skill1lastCastTime = os.clock()
+			skill1lastCastTime = os.clock()
 		end
 	end
 end)();
