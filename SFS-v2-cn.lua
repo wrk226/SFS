@@ -761,7 +761,7 @@ coroutine.wrap(function()
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local firstSkill = Skills:WaitForChild("Template1");
 			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), firstSkill:GetAttribute("Skill"));
-		lastCastTime = os.clock()
+		skill1lastCastTime = os.clock()
 		end
 	end
 end)();
@@ -781,7 +781,7 @@ coroutine.wrap(function()
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local secondSkill = Skills:WaitForChild("Template2");
 			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), secondSkill:GetAttribute("Skill"));
-			lastCastTime = os.clock()
+			skill2lastCastTime = os.clock()
 		end
 	end
 end)();
@@ -801,7 +801,7 @@ coroutine.wrap(function()
 			local Skills = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SkillsBottom"):WaitForChild("Skills");
 			local thirdSkill = Skills:WaitForChild("Template3");
 			SkillService:CastSpell(LocalPlayer:GetAttribute("NPC"), thirdSkill:GetAttribute("Skill"));
-			lastCastTime = os.clock()
+			skill3lastCastTime = os.clock()
 		end
 	end
 end)();
